@@ -36,7 +36,7 @@ ok('utils (todayVN, levelFromXp)');
 const db = require('../src/database');
 const tmp = path.join(os.tmpdir(), 'ccct-bot-check-' + Date.now() + '.json');
 db.file = tmp;
-db.data = { users: {}, giftcodes: [], claims: {}, games: {}, tickets: {} };
+db.data = { users: {}, giftcodes: [], claims: {}, games: {}, tickets: {}, giftcodeRoles: {} };
 db.save();
 const gc = require('../src/services/giftcode');
 if (gc.addCodes(['CODE1', 'CODE2', 'CODE1'], 'OB') !== 2) throw new Error('addCodes sai');
@@ -50,6 +50,19 @@ if (!c3.ok || c3.code === c1.code) throw new Error('2 người nhận trùng mã
 const c4 = gc.claim('userC', 'OB');
 if (c4.ok || c4.reason !== 'het-code') throw new Error('hết code không báo đúng');
 ok('giftcode service (nạp/nhận/chặn trùng/hết kho)');
+// 4) Khóa role giftcode: chưa có role thì bị chặn, có role thì nhận được, mở khóa thì lại mở
+gc.addCodes(['G1', 'G2', 'G3'], 'VIP');
+gc.setGate('VIP', [{ id: 'role-tuong-quan', name: 'Tướng quân' }]);
+const g1 = gc.claim('userX', 'VIP', ['role-quan-si']);
+if (g1.ok || g1.reason !== 'thieu-role') throw new Error('khóa role không chặn người lạ');
+const g2 = gc.claim('userX', 'VIP', ['role-tuong-quan']);
+if (!g2.ok) throw new Error('người có role không nhận được code');
+const g3 = gc.claim('userY', 'VIP');
+if (!g3.ok) throw new Error('claim không truyền roles phải giữ hành vi cũ (mở)');
+gc.clearGate('VIP');
+const g4 = gc.claim('userZ', 'VIP', ['role-quan-si']);
+if (!g4.ok) throw new Error('mở khóa xong phải nhận được');
+ok('giftcode khóa role (chặn/thông/mở khóa)');
 fs.unlinkSync(tmp);
 
 console.log('\nTẤT CẢ ' + pass + ' MỤC KIỂM TRA ĐỀU QUA');

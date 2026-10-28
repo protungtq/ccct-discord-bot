@@ -1,4 +1,4 @@
-# Bot Discord CCCT — v0.1.3
+# Bot Discord CCCT — v0.1.4
 
 Bot discord.js nhiều chức năng cho cộng đồng CCCT, viết dạng module: mỗi tính năng một file trong `src/commands` / `src/events`, dữ liệu lưu file JSON (`data/db.json`).
 
@@ -10,7 +10,7 @@ Bot discord.js nhiều chức năng cho cộng đồng CCCT, viết dạng modul
 | XP / Level | Chat được cộng XP (cooldown 60s); xem bằng `/rank` |
 | Bảng xếp hạng | `/top` — chọn XP / lượt mời / điểm danh |
 | Đếm lượt mời | Tự động: member vào qua link mời của ai thì người đó +1; rời server thì -1 |
-| Giftcode | Admin nạp mã `/giftcode them`; member nhận `/giftcode nhan` hoặc nút bấm từ `/giftcode panel` — mỗi người 1 mã/chiến dịch, chống nhận trùng |
+| Giftcode | Admin nạp mã `/giftcode them`; member nhận `/giftcode nhan` hoặc nút bấm từ `/giftcode panel` — mỗi người 1 mã/chiến dịch, chống nhận trùng. **Phát chặt theo role:** admin `/giftcode khoa` đặt role được nhận cho chiến dịch (tối đa 3 role, cần 1 trong các role là đủ), `/giftcode mokhoa` mở lại cho mọi người; chiến dịch không khóa thì ai cũng nhận được |
 | Ticket hỗ trợ/partner | Admin đăng `/ticket panel`; member bấm nút mở kênh riêng với BQT, đóng bằng nút trong kênh |
 | Mini game đoán số | Admin `/doanso batdau`; member chat số để đoán, bot gợi ý lớn/nhỏ, đoán đúng +100 XP |
 | Quay thưởng | Admin `/quay` — random từ tập người điểm danh hôm nay hoặc toàn bộ thành viên |

@@ -17,8 +17,10 @@ module.exports = {
       if (interaction.isButton()) {
         if (interaction.customId === 'ticket_open') return tickets.openTicket(interaction);
         if (interaction.customId === 'ticket_close') return tickets.closeTicket(interaction);
-        if (interaction.customId === 'gc_claim') {
-          const res = giftcodeService.claim(interaction.user.id, 'OB');
+        if (interaction.customId === 'gc_claim' || interaction.customId.startsWith('gc_claim:')) {
+          const campaign = interaction.customId === 'gc_claim' ? 'OB' : interaction.customId.slice('gc_claim:'.length);
+          const memberRoleIds = interaction.member ? [...interaction.member.roles.cache.keys()] : [];
+          const res = giftcodeService.claim(interaction.user.id, campaign, memberRoleIds);
           if (res.ok) {
             // Gửi code qua tin nhắn riêng (ephemeral), không lộ ra kênh công cộng
             return interaction.reply({
@@ -28,10 +30,13 @@ module.exports = {
               ephemeral: true,
             });
           }
+          const gate = giftcodeService.gateRoles(campaign);
           const msg =
             res.reason === 'da-nhan'
               ? 'Bạn đã nhận giftcode rồi: **' + res.code + '**'
-              : 'Đã phát hết giftcode đợt này. Chờ đợi đợt tiếp theo nhé!';
+              : res.reason === 'thieu-role'
+                ? 'Chiến dịch ' + campaign + ' chỉ dành cho role: ' + gate.map((r) => r.name).join(', ') + '. Bạn chưa có role này nên chưa nhận được.'
+                : 'Đã phát hết giftcode đợt này. Chờ đợi đợt tiếp theo nhé!';
           return interaction.reply({ content: msg, ephemeral: true });
         }
       }

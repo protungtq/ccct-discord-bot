@@ -12,6 +12,7 @@ const EMPTY = () => ({
   users: {},      // userId -> { xp, lastXpAt, checkin:{lastDate,streak,total}, invites, invitedBy }
   giftcodes: [],  // { code, campaign, claimedBy, claimedAt }
   claims: {},     // userId -> { campaign: code }
+  giftcodeRoles: {}, // campaign -> [{ id, name }] (khóa role; rỗng = mở cho mọi người)
   games: {},      // channelId -> { type:'doanso', secret, max, startedBy, startedAt }
   tickets: {},    // channelId -> { userId, openedAt }
 });
