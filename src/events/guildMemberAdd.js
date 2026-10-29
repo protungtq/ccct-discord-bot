@@ -42,7 +42,7 @@ module.exports = {
         'Chào mừng thành viên mới!',
         'Xin chào ' +
           member.toString() +
-          ' đã đến với cộng đồng CCCT!\nĐọc #noi-quy, /diemdanh mỗi ngày để nhận XP và đừng quên mở ticket nếu cần hỗ trợ nhé.',
+          '! Ta là Điêu Thuyền, bot nhà của cộng đồng CCCT. 🏯\nLên Quân sĩ rồi thì nhớ /diemdanh mỗi ngày để tích XP lên cấp, đua top mời bạn và săn giftcode nhé.\nCần hỗ trợ thì mở ticket, đội Mưu sĩ trực mỗi ngày nhé!',
         0x57f287
       ).setThumbnail(member.user.displayAvatarURL());
       channel.send({ embeds: [e] }).catch(() => {});

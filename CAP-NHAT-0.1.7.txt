@@ -1,0 +1,18 @@
+BAN CAP NHAT 0.1.7 - TIN CHAO DIEU THUYEN CHAO KIEU KHAC CARL-BOT
+============================================================
+- Doi text chao mung cua bot nha (Dieu Thuyen) de khong trung voi tin
+  chao cua Carl-bot: Carl lo phan cong (Tan binh, doc noi quy, bam
+  tick xanh len Quan si), Dieu Thuyen lo phan choi (cay XP, diem danh,
+  dua top moi ban, san giftcode, mo ticket).
+- Text moi (van tag ten mem moi vao):
+  "Xin chao @mem-moi! Ta la Dieu Thuyen, bot nha cua cong dong CCCT.
+  Len Quan si roi thi nho /diemdanh moi ngay de tich XP len cap, dua
+  top moi ban va san giftcode nhe.
+  Can ho tro thi mo ticket, doi Muu si truc moi ngay nhe!"
+- Khong nhac ten su kien cu the de text chao khong loi thoi theo tung
+  event.
+- KHONG them lenh slash moi nen KHONG can chay deploy.bat lan nay.
+- Zip nay KHONG co file .env va KHONG co data -> token va du lieu
+  diem danh/XP duoc giu nguyen.
+
+CACH CAP NHAT: Sync repository (Merge) + Restart tren Botkeep la xong.
