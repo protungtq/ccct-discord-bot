@@ -39,6 +39,27 @@ class Database {
     fs.writeFileSync(tmp, JSON.stringify(this.data, null, 2), 'utf8');
     fs.renameSync(tmp, this.file);
   }
+  // Lưu 1 bản copy theo ngày (giờ VN) vào data/backups/, chỉ giữ 14 bản mới nhất.
+  // Trả về đường dẫn bản backup, hoặc null nếu chưa có file dữ liệu.
+  backup() {
+    try {
+      const dir = path.join(path.dirname(this.file), 'backups');
+      fs.mkdirSync(dir, { recursive: true });
+      const today = new Intl.DateTimeFormat('en-CA', { timeZone: config.timezone }).format(new Date());
+      const dest = path.join(dir, 'db-' + today + '.json');
+      fs.copyFileSync(this.file, dest);
+      const files = fs
+        .readdirSync(dir)
+        .filter((f) => /^db-\d{4}-\d{2}-\d{2}\.json$/.test(f))
+        .sort();
+      while (files.length > 14) {
+        fs.unlinkSync(path.join(dir, files.shift()));
+      }
+      return dest;
+    } catch (e) {
+      return null;
+    }
+  }
   user(id) {
     if (!this.data.users[id]) {
       this.data.users[id] = {

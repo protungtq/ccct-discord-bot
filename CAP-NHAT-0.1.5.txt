@@ -1,0 +1,17 @@
+BAN CAP NHAT 0.1.5 - LENH /SAO-LUU + BACKUP TU DONG THEO NGAY
+================================================================
+- Them lenh slash /sao-luu (chi admin: quyen Administrator hoac role
+  Admin/Mod): bam la bot luu du lieu moi nhat roi gui file data/db.json
+  vao #mod-chat de tai ve. Neu khong tim thay #mod-chat, bot gui thang
+  file qua tin ephemeral cho admin.
+- Backup tu dong theo ngay tren server: luc bot khoi dong + kiem tra
+  moi gio, bot copy data/db.json thanh data/backups/db-YYYY-MM-DD.json
+  (gio VN), chi giu 14 ban moi nhat, ban cu tu xoa.
+- File db.json chua ca ma giftcode CHUA PHAT -> chi de trong #mod-chat
+  (mod moi doc duoc), dung chuyen ra kenh cong khai.
+- Them lenh slash moi nen CAN chay deploy.bat 1 lan de dang ky /sao-luu.
+- Zip nay KHONG co file .env va KHONG co data -> token va du lieu
+  diem danh/XP duoc giu nguyen.
+
+CACH CAP NHAT: Sync repository (Merge) + Restart tren Botkeep, sau do
+  tai code moi ve PC roi chay deploy.bat 1 lan (khong chay start-bot).

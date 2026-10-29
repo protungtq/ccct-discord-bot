@@ -1,5 +1,6 @@
 'use strict';
 const { Events, ActivityType } = require('discord.js');
+const db = require('../database');
 
 module.exports = {
   name: Events.ClientReady,
@@ -8,6 +9,15 @@ module.exports = {
     console.log('[bot] Đăng nhập thành công: ' + client.user.tag);
     console.log('[bot] Đang phục vụ ' + client.guilds.cache.size + ' server');
     client.user.setActivity('CCCT | /trogiup', { type: ActivityType.Playing });
+    // Sao lưu dữ liệu theo ngày: 1 bản lúc khởi động + kiểm tra mỗi giờ
+    // (để qua ngày mới khi bot đang chạy vẫn có bản mới). Chỉ giữ 14 bản.
+    const daily = db.backup();
+    if (daily) console.log('[bot] Đã lưu bản sao lưu: ' + daily);
+    setInterval(() => {
+      try {
+        db.backup();
+      } catch (e) {}
+    }, 60 * 60 * 1000);
     // Cache lời mời để đối chiếu khi có member mới (invite tracking)
     client.inviteCache = new Map();
     for (const guild of client.guilds.cache.values()) {

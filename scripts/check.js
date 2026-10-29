@@ -64,5 +64,24 @@ const g4 = gc.claim('userZ', 'VIP', ['role-quan-si']);
 if (!g4.ok) throw new Error('mở khóa xong phải nhận được');
 ok('giftcode khóa role (chặn/thông/mở khóa)');
 fs.unlinkSync(tmp);
+// 5) Backup theo ngày: lưu vào thư mục tạm, backup phải tạo được bản copy đúng ngày
+const tmpDir = path.join(os.tmpdir(), 'ccct-bot-check-' + Date.now());
+db.file = path.join(tmpDir, 'db.json');
+db.data = { users: {}, giftcodes: [], claims: {}, games: {}, tickets: {}, giftcodeRoles: {} };
+db.save();
+const backupPath = db.backup();
+const expectBackup = path.join(tmpDir, 'backups', 'db-' + utils.todayVN() + '.json');
+if (backupPath !== expectBackup || !fs.existsSync(expectBackup)) throw new Error('backup không tạo đúng file ngày');
+if (fs.readFileSync(expectBackup, 'utf8') !== fs.readFileSync(db.file, 'utf8')) throw new Error('backup lệch nội dung');
+// Giữ tối đa 14 bản: tạo thêm 15 bản cũ rồi backup lại, bản cũ nhất phải bị xóa
+for (let i = 1; i <= 15; i++) {
+  fs.writeFileSync(path.join(tmpDir, 'backups', 'db-2025-01-' + String(i).padStart(2, '0') + '.json'), '{}');
+}
+db.backup();
+const kept = fs.readdirSync(path.join(tmpDir, 'backups')).filter((f) => f.startsWith('db-'));
+if (kept.length > 14 || fs.existsSync(path.join(tmpDir, 'backups', 'db-2025-01-01.json')))
+  throw new Error('backup không dọn bản cũ');
+fs.rmSync(tmpDir, { recursive: true, force: true });
+ok('backup theo ngày (tạo bản copy + dọn bản cũ quá 14)');
 
 console.log('\nTẤT CẢ ' + pass + ' MỤC KIỂM TRA ĐỀU QUA');
