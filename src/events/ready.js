@@ -1,6 +1,7 @@
 'use strict';
 const { Events, ActivityType } = require('discord.js');
 const db = require('../database');
+const { startAutoBackup } = require('../services/autobackup');
 
 module.exports = {
   name: Events.ClientReady,
@@ -18,6 +19,8 @@ module.exports = {
         db.backup();
       } catch (e) {}
     }, 60 * 60 * 1000);
+    // Sao lưu tự động 23h: gửi file qua DM chủ server (fallback #mod-chat)
+    startAutoBackup(client);
     // Cache lời mời để đối chiếu khi có member mới (invite tracking)
     client.inviteCache = new Map();
     for (const guild of client.guilds.cache.values()) {

@@ -15,6 +15,7 @@ const EMPTY = () => ({
   giftcodeRoles: {}, // campaign -> [{ id, name }] (khóa role; rỗng = mở cho mọi người)
   games: {},      // channelId -> { type:'doanso', secret, max, startedBy, startedAt }
   tickets: {},    // channelId -> { userId, openedAt }
+  autoBackupSent: '', // ngày VN đã gửi sao lưu tự động (chống gửi trùng)
 });
 
 class Database {

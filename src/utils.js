@@ -39,4 +39,12 @@ function modLog(guild, text) {
   const ch = guild.channels.cache.get(id);
   if (ch && ch.isTextBased()) ch.send(text).catch(() => {});
 }
-module.exports = { todayVN, dateVN, levelFromXp, xpForNextLevel, isAdmin, embed, modLog };
+// Tìm kênh mod: ưu tiên MOD_LOG_CHANNEL_ID, nếu chưa đặt thì tìm kênh tên mod-chat
+function findModChannel(guild) {
+  if (config.modLogChannelId) {
+    const ch = guild.channels.cache.get(config.modLogChannelId);
+    if (ch && ch.isTextBased()) return ch;
+  }
+  return guild.channels.cache.find((c) => c.isTextBased() && c.name === 'mod-chat') || null;
+}
+module.exports = { todayVN, dateVN, levelFromXp, xpForNextLevel, isAdmin, embed, modLog, findModChannel };

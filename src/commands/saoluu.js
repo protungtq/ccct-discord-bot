@@ -2,17 +2,7 @@
 const fs = require('fs');
 const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
 const db = require('../database');
-const config = require('../config');
-const { isAdmin, todayVN } = require('../utils');
-
-// Tìm kênh mod: ưu tiên MOD_LOG_CHANNEL_ID, nếu chưa đặt thì tìm kênh tên mod-chat
-function findModChannel(guild) {
-  if (config.modLogChannelId) {
-    const ch = guild.channels.cache.get(config.modLogChannelId);
-    if (ch && ch.isTextBased()) return ch;
-  }
-  return guild.channels.cache.find((c) => c.isTextBased() && c.name === 'mod-chat') || null;
-}
+const { isAdmin, todayVN, findModChannel } = require('../utils');
 
 module.exports = {
   data: new SlashCommandBuilder()

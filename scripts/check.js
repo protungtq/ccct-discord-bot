@@ -83,5 +83,13 @@ if (kept.length > 14 || fs.existsSync(path.join(tmpDir, 'backups', 'db-2025-01-0
   throw new Error('backup không dọn bản cũ');
 fs.rmSync(tmpDir, { recursive: true, force: true });
 ok('backup theo ngày (tạo bản copy + dọn bản cũ quá 14)');
+// 6) Sao lưu tự động: chỉ gửi đúng giờ 23h và khi hôm nay chưa gửi
+const ab = require('../src/services/autobackup');
+const today = utils.todayVN();
+if (!ab.shouldAutoBackup(today, 23, '')) throw new Error('23h chưa gửi phải cho gửi');
+if (ab.shouldAutoBackup(today, 23, today)) throw new Error('23h đã gửi rồi phải chặn');
+if (ab.shouldAutoBackup(today, 22, '')) throw new Error('22h không được gửi');
+if (ab.shouldAutoBackup(today, 10, '')) throw new Error('10h sáng không được gửi');
+ok('sao lưu tự động (đúng giờ + chống gửi trùng)');
 
 console.log('\nTẤT CẢ ' + pass + ' MỤC KIỂM TRA ĐỀU QUA');

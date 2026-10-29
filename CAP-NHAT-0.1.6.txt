@@ -1,0 +1,16 @@
+BAN CAP NHAT 0.1.6 - SAO LUU TU DONG 23H QUA DM CHU SERVER
+============================================================
+- Them sao luu tu dong moi toi: vao khung 23h gio VN, bot luu du lieu
+  moi nhat, luu 1 ban theo ngay tren server, roi gui file db.json thang
+  qua tin nhan rieng (DM) cho chu server. Neu khong DM duoc (chu server
+  khoa DM tu thanh vien server) thi gui vao #mod-chat.
+- Ngay da gui duoc ghi vao du lieu (autoBackupSent) de bot khoi dong
+  lai trong cung khung 23h cung khong gui trung. Bot bat len trong khung
+  23h van gui bu trong dem do. Neu bot tat ca khung 23h thi dem do
+  khong gui DM, nhung file backup ngay van co tren server.
+- Doi gio gui: them AUTO_BACKUP_HOUR=... vao .env (mac dinh 23).
+- KHONG them lenh slash moi nen KHONG can chay deploy.bat lan nay.
+- Zip nay KHONG co file .env va KHONG co data -> token va du lieu
+  diem danh/XP duoc giu nguyen.
+
+CACH CAP NHAT: Sync repository (Merge) + Restart tren Botkeep la xong.
