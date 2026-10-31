@@ -1,0 +1,22 @@
+CCCT Discord Bot — Bản cập nhật 0.1.8
+=====================================
+
+THAY ĐỔI CHÍNH: bot tự đổi avatar qua API khi khởi động.
+
+Lý do: đổi App Icon trong Developer Portal rồi restart bot mà Discord
+vẫn hiện avatar cũ — avatar của tài khoản bot không ăn theo ảnh Portal.
+Từ bản này, mỗi lần bot khởi động nó tự đọc ảnh trong thư mục assets/
+của repo và set làm avatar (chỉ set khi ảnh thay đổi, nên restart
+nhiều lần không bị Discord giới hạn).
+
+CÁCH CẬP NHẬT TRÊN BOTKEEP (không cần deploy.bat — bản này không thêm
+lệnh slash nào):
+1. Vào Botkeep → server CCCT → Sync từ GitHub, chọn chế độ MERGE
+   (tuyệt đối KHÔNG chọn Replace — sẽ mất file dữ liệu data/db.json).
+2. Restart bot.
+3. Mở Discord kiểm tra: avatar của Điêu Thuyền phải là ảnh mới.
+   Log của bot có dòng "Đã cập nhật avatar bot từ file assets/" nếu
+   lần khởi động đó có đổi avatar.
+
+ĐỔI AVATAR LẦN SAU: chỉ cần thay file assets/avatar.png trong repo
+(hoặc báo Bé Sóc gắn ảnh mới), Sync + Restart là bot tự đổi theo.

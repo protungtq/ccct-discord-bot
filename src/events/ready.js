@@ -2,6 +2,7 @@
 const { Events, ActivityType } = require('discord.js');
 const db = require('../database');
 const { startAutoBackup } = require('../services/autobackup');
+const { syncAvatar } = require('../services/avatarsync');
 
 module.exports = {
   name: Events.ClientReady,
@@ -10,6 +11,8 @@ module.exports = {
     console.log('[bot] Đăng nhập thành công: ' + client.user.tag);
     console.log('[bot] Đang phục vụ ' + client.guilds.cache.size + ' server');
     client.user.setActivity('CCCT | /trogiup', { type: ActivityType.Playing });
+    // Đồng bộ avatar bot từ file assets/ trong repo (chỉ khi ảnh thay đổi)
+    await syncAvatar(client);
     // Sao lưu dữ liệu theo ngày: 1 bản lúc khởi động + kiểm tra mỗi giờ
     // (để qua ngày mới khi bot đang chạy vẫn có bản mới). Chỉ giữ 14 bản.
     const daily = db.backup();
